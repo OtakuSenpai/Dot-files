@@ -1,0 +1,135 @@
+# Conky, a system monitor, based on torsmo
+#
+# Any original torsmo code is licensed under the BSD license
+#
+# All code written since the fork of torsmo is licensed under the GPL
+#
+# Please see COPYING for details
+#
+# Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
+# Copyright (c) 2005-2010 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+# All rights reserved.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+alignment top_right
+background yes
+color5
+#console_graph_ticks "5","1000"
+border_width 1
+cpu_avg_samples1 10
+default_color ivory
+default_outline_color red
+default_shade_color yellow
+draw_borders yes
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+
+diskio_avg_samples 5
+use_xft yes
+xftfont DejaVu Sans Mono:size=12
+gap_x 5
+gap_y 25
+minimum_size 10 100
+maximum_width 240
+net_avg_samples 5
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline yes
+own_window yes
+own_window_type normal
+own_window_transparent true
+own_window_class Conky
+#own_window_type override
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager'
+own_window_argb_visual false #change this for transparent or black n white
+own_window_argb_value 0
+double_buffer yes
+background = false
+
+stippled_borders 0
+update_interval 2
+uppercase no
+use_spacer none
+show_graph_scale yes
+show_graph_range yes
+temperature_unit celsius
+text_buffer_size 2048
+
+TEXT
+${font Arial:size=16}${color blue}Neelz ${color Ivory}Den
+${color orange}${font GE Inspira:pixelsize=16}${time %H:%M:%S}${font}${voffset -10}${offset 10}${color orange}${color orange}${font GE Inspira:pixelsize=8}${time %d} ${voffset -5}${color}${font GE Inspira:pixelsize=10}${time  %B} ${time %Y}${font}${voffset 7}${font GE Inspira:pixelsize=16}${offset -10}${time %A}${font}${color orange}
+${font Arial:size=14}${color 00008f}SYSTEM ${color 00008f}${hr 2}
+${font Arial:size=14}${alignc}${color 008f00}USER: ${font Arial:pixelsize=12}${alignc}${nodename}
+${font Arial:pixelsize=14}${alignc}DISTRO:  ${pre_exec cat /etc/issue.net}
+${font Arial:pixelsize=14}${alignc}KERNEL: ${kernel}${color 008f00} 
+
+${color LightRed}Uptime:${color Cyan} $uptime
+${font Arial:pixelsize=13}${alignc}${color Cyan}TOTAL DL:  ${totaldown eth0} 
+${font Arial:pixelsize=13}${alignc}${color Cyan}TOTAL UL:  ${totalup eth0}
+${font Arial:pixelsize=12}${color LightRed}Frequency ${color 6600DD}(in MHz):${color red} $freq
+${color LighRed}Frequency ${color 6600DD}(in GHz):${color red} $freq_g
+${color 0099CC}Processes:${color 9900C0} $processes  ${color 0099AA}Running:${color 9900C0} $running_processes
+$hr
+
+${color CC9900}NETWORK (${addr eth0}) ${hr 2}$color
+#${color DimGray}External IP $alignr${execi 3600 wget -O – http://whatismyip.org/ | tail}
+
+${font Arial:pixelsize=12}${color red}Down-Speed: ${alignr}${downspeed eth0} kb/s 
+${downspeedgraph eth0 20,180 000000 000000}
+
+${font Arial:pixelsize=12}${color blue}Up-Speed: ${alignr}${upspeed eth0} kb/s 
+${upspeedgraph eth0 20,180 000000 000000}$color
+
+${color Red}Total Download: ${totaldown eth0} ${alignr}Total Upload: ${totalup eth0}
+Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768 61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}$color
+$hr
+
+${color Orange}Total CPU: ${cpu cpu0}%
+${color Magneta}${cpubar}$color
+${cpugraph 000000 597DB2}
+${color Red}Frequency ${color Red}${hr 2}
+${color Purple}Core 1: ${color Purple}${freq 1} MHz        ${color Purple}Temprature: ${exec sensors|grep 'Core0'|awk '{print $3}'}
+${cpu cpu1}% ${color Cyan}${cpubar cpu1}$color
+${color Yellow}Core 2: ${color Yellow}${freq 2} MHz        ${color Yellow}Temprature: ${exec sensors|grep 'Core1'|awk '{print $3}'}
+${cpu cpu2}% ${color Cyan}${cpubar cpu2}$color
+
+${color 9C0000}MEMORY ${hr 2}$color
+${color Red}RAM Used: ${mem}$color 	${color Red}RAM Free: ${memfree}/ ${memmax}$color
+${color Brown}RAM: $memperc%  ${color 660F0F} ${membar 6}$color
+${color Brown}Swap: $swapperc%   ${color 660F0F} ${swapbar 6}$color
+# ${image ./img/cpu.png -p 10,25}
+
+${color CC9900}DISK ${hr 2}$color
+${color LightGreen}/dev/sdb1 ${fs_type} (Root): ${fs_free_perc /}% ${color FFFF33}   ${fs_bar 6 /}$color
+${color LightGreen}/dev/sdb5 ext4 (home): ${fs_free_perc /home}% ${color FFFF33} ${fs_bar  6 /home}$color
+${color LightGreen}/dev/sdd1 vfat (0EA5-32B2): ${fs_free_perc /media/neelz/0EA5-32B2}%   ${color FFFF33} ${fs_bar 6 /media/neelz/0EA5-32B2}$color
+${color LightGreen}/dev/sdc5 ext4 (Ma_Hub1): ${fs_free_perc /media/neelz/Ma_Hub1}%   ${color FFFF33} ${fs_bar 6 /media/neelz/Ma_Hub1}$color
+
+${color CC9900}PROCESSES ${hr 2} $color
+${color black}  -----Command-----                     CPU%
+${color brown} ${top name 1}                          ${top cpu 1} 
+${color brown} ${top name 2}                          ${top cpu 2} 
+${color brown} ${top name 3}                          ${top cpu 3} 
+${color brown} ${top name 4}                          ${top cpu 4}
+${color brown} ${top name 5}                          ${top cpu 5}
+${color black}  -----Command-----                     MEM%
+${color brown} ${top name 1}                          ${top mem 1}
+${color brown} ${top name 2}                          ${top mem 2}
+${color brown} ${top name 3}                          ${top mem 3}
+${color brown} ${top name 4}                          ${top mem 4}
+${color brown} ${top name 5}                          ${top mem 5}
+
