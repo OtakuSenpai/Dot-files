@@ -82,13 +82,13 @@ ${font Arial:pixelsize=14}${alignc}KERNEL: ${kernel}${color 008f00}
 ${color DarkRed}Uptime:${color DarkBlue} $uptime
 ${color 0099CC}Processes:${color 9900C0} $processes  ${color 0099AA}Running:${color 9900C0} 
 
-${color CC9900}NETWORK (${addr wlp5s0}) ${hr 2}$color
+${color CC9900}NETWORK (${addr eno1}) ${hr 2}$color
 #${color DimGray}External IP $alignr${execi 3600 wget -O – http://whatismyip.org/ | tail}
-${font Arial:pixelsize=12}${color red}Down-Speed: ${alignr}${downspeed wlp5s0} 
-${downspeedgraph wlp5s0 20,180 000000 000000}
-${font Arial:pixelsize=12}${color blue}Up-Speed: ${alignr}${upspeed wlp5s0} kb/s 
-${upspeedgraph wlp5s0 20,180 000000 000000}$color
-${color Red}Total Download: ${totaldown wlp5s0} ${alignr}Total Upload: ${totalup wlp5s0}
+${font Arial:pixelsize=12}${color red}Down-Speed: ${alignr}${downspeed eno1} 
+${downspeedgraph eno1 20,180 000000 000000}
+${font Arial:pixelsize=12}${color blue}Up-Speed: ${alignr}${upspeed eno1} kb/s 
+${upspeedgraph eno1 20,180 000000 000000}$color
+${color Red}Total Download: ${totaldown eno1} ${alignr}Total Upload: ${totalup eno1}
 Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768 61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}$color
 ${color CC0099}CPU  ${hr 2}$color
 ${color DarkRed}Total CPU: ${cpu cpu0}%
