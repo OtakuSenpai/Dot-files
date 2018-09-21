@@ -13,6 +13,7 @@ fi
 
 start-pulseaudio-x11 &
 nm-applet &
+chronyc -4 -f ~/chrony.conf
 
 # exec gnome-session
 # exec startkde
